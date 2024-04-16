@@ -27,6 +27,5 @@ export function Button({variant = ButtonVariant.Default, children, ...rest }: IB
         break
     }
 
-
     return <button className={buttonClass} {...rest}> {children}</button>
 }
