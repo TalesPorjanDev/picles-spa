@@ -1,4 +1,5 @@
 export interface IPet {
+    id: any
     name: string
     type: string
     size: string

@@ -3,7 +3,7 @@ import httpClient from "../api/httpClient";
 
 export async function getPets(params?: GetPetRequest): Promise<GetPetResponse> {
   try {
-    const response = await httpClient.get("/pets", { params });
+    const response = await httpClient.get("/pet", { params });
 
     return response.data;
   } catch (error) {
