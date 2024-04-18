@@ -2,6 +2,10 @@ import { Header } from "../../components/common/Header";
 import { Grid } from "../../components/layout/Grid/grid";
 import styles from './Pets.module.css'
 import { Card } from "../../components/common/Card";
+import { Skeleton } from '../../components/common/Skeleton';
+
+
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export function Pets() {
     return (
@@ -9,9 +13,8 @@ export function Pets() {
             <div className={styles.container}>
             <Header />
             <main className={styles.list}>
-                <Card href='./pets/1' text="nina" thumb="" />
-                <Card href='./pets/2' text="bob" thumb="" />
-                <Card href='./pets/3' text="jão" thumb="" />
+                <Skeleton count={5}
+                containerClassName={styles.skeleton} />
             </main>
             </div>
         </Grid>

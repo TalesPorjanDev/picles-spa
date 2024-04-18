@@ -1,0 +1,18 @@
+export interface IPet {
+    name: string
+    type: string
+    size: string
+    gender: string
+    bio: string
+    photo: string
+}
+
+export type GetPetRequest = Partial <Pick<IPet, 'type' | 'size' | 'gender'>> & {
+    page?: number
+}
+
+export type GetPetResponse = {
+    items: IPet[]
+    totalPages: number
+    currentPage: number
+}
