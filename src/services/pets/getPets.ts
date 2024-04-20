@@ -1,7 +1,7 @@
-import { GetPetRequest, GetPetResponse } from "../../interfaces/pet";
+import { GetPetRequest, GetPetsResponse } from "../../interfaces/pet";
 import httpClient from "../api/httpClient";
 
-export async function getPets(params?: GetPetRequest): Promise<GetPetResponse> {
+export async function getPets(params?: GetPetRequest): Promise<GetPetsResponse> {
   try {
     const response = await httpClient.get("/pet", { params });
 
