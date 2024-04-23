@@ -6,15 +6,26 @@ import { useQuery } from "@tanstack/react-query";
 import { getPetById } from "../Pets/getPetById";
 import { ImageBase64 } from "../../components/common/ImageBase64/ImageBase64";
 import Skeleton from "react-loading-skeleton";
+import { useShelter } from "../../hooks/useShelter";
+import { Button, ButtonVariant } from "../../components/common/Button";
+
+import whatsapp from '../../assets/whatsapp.svg'
 
 export function PetDetails() {
   const { id } = useParams();
-  const { data, isLoading, isError } = useQuery({
+
+  const { data: shelterData, isError: shelterIsError } = useShelter();
+  const {
+    data: petData,
+    isLoading,
+    isError: petIsError,
+  } = useQuery({
     queryKey: ["get-pet-by-id", id],
     queryFn: async () => {
       return await getPetById(id ?? "");
     },
   });
+
   return (
     <Grid>
       <div className={styles.container}>
@@ -29,18 +40,32 @@ export function PetDetails() {
 
           {!isLoading && (
             <>
-              <ImageBase64 src={data?.photo} className={styles.picture} />
-              {isError && (
+              <ImageBase64 src={petData?.photo} className={styles.picture} />
+              {petIsError && (
                 <>
                   <h1>Pet não encontrado</h1>
                   <Link to="/pets/">Voltar para a listagem</Link>
                 </>
               )}
-              {!isError && (
+              {!petIsError && (
                 <>
-                  <h1>{data?.name}</h1>
+                  <h1>{petData?.name}</h1>
                   <span>Sobre o pet:</span>
-                  <p>{data?.bio}</p>
+                  <p>{petData?.bio}</p>
+                  {!shelterIsError && (
+                    <a
+                      href={`https://wa.me/${shelterData?.shelterWhatsApp}?text='Olá
+                      ,gostaria de fala sobre o ${petData?.name}'`}
+                      target="_blank"
+                    >
+                      <Button variant={ButtonVariant.Text}>
+                        <span className={styles.buttonWhatsapp}>
+                         <img src={whatsapp} /> 
+                        Entre em contato com o abrigo
+                      </span>
+                      </Button>
+                    </a>
+                  )}
                 </>
               )}
             </>
