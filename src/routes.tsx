@@ -4,6 +4,7 @@ import { Pets } from "./pages/Pets";
 import { PetDetails } from "./pages/PetDetails";
 import { Shelter } from "./pages/Admin/Shelter";
 import { PetList } from "./pages/Admin/PetList";
+import { AuthHOC } from "./components/common/AuthHOC/AuthHOC";
 
 const router = createBrowserRouter ([
     {
@@ -33,11 +34,12 @@ const router = createBrowserRouter ([
             },
             {
                 path: '/admin/pets',
+                element: <AuthHOC />,
                 children: [
                     {
                         index: true,
                         element: <PetList />,
-                    }
+                    },
                 ]
             }
         ]
