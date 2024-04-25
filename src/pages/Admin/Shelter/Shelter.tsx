@@ -7,8 +7,9 @@ import styles from "./Shelter.module.css";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useHookFormMask } from "use-mask-input";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import { updateShelter } from "./updateShelter";
+import { useQueryClient } from "@tanstack/react-query";
 
 const shelterSchema = z.object({
   name: z
@@ -33,17 +34,20 @@ export function Shelter() {
     resolver: zodResolver(shelterSchema),
   });
   const registerWithMask = useHookFormMask(register);
+  const queryClient = useQueryClient()
 
   async function submit({ name, email, phone, whatsApp }: ShelterSchema) {
     const toastId = toast.loading("Salvando dados");
 
     try {
+      
       await updateShelter({
         name,
         email,
         phone: phone.replace(/\D/g, ""),
         whatsApp: whatsApp.replace(/\D/g, ""),
       });
+      queryClient.invalidateQueries({queryKey: ['get-shelter'] })
       toast.success("Dados salvos com sucesso", {
         id: toastId,
         closeButton: true,
